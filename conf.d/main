@@ -51,6 +51,10 @@ EOF
 
 DEBIAN_FRONTEND=noninteractive dpkg-reconfigure bugzilla3
 
+# set default email language to english
+MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
+$MYSQL_BATCH --execute "UPDATE bugzilla3.setting SET default_value = 'en' WHERE name = 'lang';"
+
 # stop mysql server
 /etc/init.d/mysql stop
 
