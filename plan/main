@@ -28,3 +28,6 @@ patchutils
 libgd-gd2-perl
 libtemplate-plugin-gd-perl
 libchart-perl
+libjson-rpc-perl
+libtest-taint-perl
+libtheschwartz-perl
