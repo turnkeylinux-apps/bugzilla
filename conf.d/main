@@ -1,0 +1,81 @@
+#!/bin/sh -ex
+
+BZ_ADMIN_NAME=admin
+BZ_ADMIN_PASS=turnkey
+BZ_ADMIN_MAIL=admin@example.com
+
+BZ_ETC=/etc/bugzilla3
+BZ_SHARE=/usr/share/bugzilla3
+
+# convenience symlinks
+ln -s /usr/share/bugzilla3/web /var/www/webroot
+ln -s /etc/bugzilla3 /var/www/config
+
+# innodb workaround
+/etc/init.d/mysql start
+/etc/init.d/mysql stop
+rm /var/lib/mysql/ib_logfile*
+
+# start mysql server
+/etc/init.d/mysql start
+
+# configure bugzilla db settings
+cat > /etc/dbconfig-common/bugzilla3.conf <<EOF
+dbc_install='true'
+dbc_upgrade='true'
+dbc_remove=''
+dbc_dbtype='mysql'
+dbc_dbuser='bugzilla3'
+dbc_dbpass='y1JoES55Nqvw'
+dbc_dbserver=''
+dbc_dbport=''
+dbc_dbname='bugzilla3'
+dbc_dbadmin='root'
+dbc_basepath=''
+dbc_ssl=''
+dbc_authmethod_admin=''
+dbc_authmethod_user=''
+EOF
+
+# configure bugzilla app settings
+debconf-set-selections << EOF
+bugzilla3 bugzilla3/dbconfig-install boolean true
+bugzilla3 bugzilla3/customized_values boolean false
+bugzilla3 bugzilla3/customized_values_ask_again boolean false
+bugzilla3 bugzilla3/bugzilla_admin_pwd password $BZ_ADMIN_PASS
+bugzilla3 bugzilla3/bugzilla_admin_name string $BZ_ADMIN_MAIL
+bugzilla3 bugzilla3/bugzilla_admin_real_name string $BZ_ADMIN_NAME
+bugzilla3 bugzilla_admin_real_name string $BZ_ADMIN_NAME
+EOF
+
+DEBIAN_FRONTEND=noninteractive dpkg-reconfigure bugzilla3
+
+# stop mysql server
+/etc/init.d/mysql stop
+
+# update config
+update_params() {
+    sed -i "s;'$1' => \(.*\);'$1' => '$2',;" $BZ_ETC/params
+}
+
+#set urlbase to webroot
+update_params urlbase /
+
+# enable imagemap (webdot)
+a2enmod imagemap
+
+# apache configuration
+rm /etc/apache2/conf.d/bugzilla3.conf
+touch /etc/apache2/conf.d/bugzilla3.conf
+
+ln -s $BZ_ETC/apache.conf /etc/apache2/sites-available/bugzilla3
+a2dissite default
+a2ensite bugzilla3
+
+# cron jobs
+echo "
+0 0 * * * (cd $BZ_SHARE/lib && ./collectstats.pl)
+0 0 * * * (cd $BZ_SHARE/lib && ./whineatnews.pl)
+0,15,30,45 * * * * (cd $BZ_SHARE/lib && ./whine.pl)
+" | crontab -u root -
+

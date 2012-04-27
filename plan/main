@@ -1,0 +1,31 @@
+#include <turnkey/base>
+
+apache2-mpm-worker
+webmin-apache
+
+mysql-client
+mysql-server
+webmin-mysql
+
+postfix
+webmin-postfix
+
+bugzilla3
+bugzilla3-doc
+
+libcgi-pm-perl          /* versioned dep (provided by perl-modules) */
+perlmagick
+graphviz
+libxml-parser-perl
+libhtml-parser-perl
+libhtml-scrubber-perl
+libmailtools-perl
+libmime-tools-perl
+libnet-ldap-perl
+libsoap-lite-perl
+libwww-perl
+libxml-twig-perl
+patchutils
+libgd-gd2-perl
+libtemplate-plugin-gd-perl
+libchart-perl

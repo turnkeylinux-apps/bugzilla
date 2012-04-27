@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# set bugzilla admin email and password
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/bugzilla.py --pass="$APP_PASS" --email="$APP_EMAIL"
+
