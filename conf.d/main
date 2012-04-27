@@ -40,6 +40,7 @@ EOF
 # configure bugzilla app settings
 debconf-set-selections << EOF
 bugzilla3 bugzilla3/dbconfig-install boolean true
+bugzilla3 bugzilla3/dbconfig-reinstall boolean true
 bugzilla3 bugzilla3/customized_values boolean false
 bugzilla3 bugzilla3/customized_values_ask_again boolean false
 bugzilla3 bugzilla3/bugzilla_admin_pwd password $BZ_ADMIN_PASS
