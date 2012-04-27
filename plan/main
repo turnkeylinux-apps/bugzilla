@@ -15,7 +15,6 @@ bugzilla3-doc
 
 libcgi-pm-perl          /* versioned dep (provided by perl-modules) */
 perlmagick
-graphviz
 libxml-parser-perl
 libhtml-parser-perl
 libhtml-scrubber-perl
