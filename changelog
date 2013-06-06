@@ -1,6 +1,6 @@
 turnkey-bugzilla-12.1 (1) turnkey; urgency=low
 
-  * Latest Debian package version of Bugzilla.
+  * Latest Debian Squeeze package version of Bugzilla.
 
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
