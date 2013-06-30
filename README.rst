@@ -45,7 +45,7 @@ Credentials *(passwords set at first boot)*
 -  Webmin, Webshell, SSH, MySQL: username **root**
 -  Bugzilla:
    
-   -  username **admin@example.com**
+   -  username is email set at first boot
    -  customize via:
       http://*appliance\_ip*/editusers.cgi?action=edit&userid=1
 
