@@ -2,32 +2,24 @@
 
 apache2-mpm-worker
 webmin-apache
+libapache2-mod-perl2
 
 mysql-client
 mysql-server
 webmin-mysql
+libdbd-mysql-perl
 
 postfix
 webmin-postfix
+libemail-send-perl
+libemail-mime-perl
 
-bugzilla3
-bugzilla3-doc
-
-libcgi-pm-perl          /* versioned dep (provided by perl-modules) */
-perlmagick
-libxml-parser-perl
-libhtml-parser-perl
-libhtml-scrubber-perl
-libmailtools-perl
-libmime-tools-perl
-libnet-ldap-perl
-libsoap-lite-perl
-libwww-perl
-libxml-twig-perl
-patchutils
-libgd-gd2-perl
-libtemplate-plugin-gd-perl
+libdatetime-perl
+liburi-perl
+liblist-moreutils-perl
+libmath-random-isaac-perl
+libgd-graph-perl
 libchart-perl
-libjson-rpc-perl
-libtest-taint-perl
-libtheschwartz-perl
+libtemplate-perl
+libtemplate-plugin-gd-perl
+
