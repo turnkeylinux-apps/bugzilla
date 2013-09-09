@@ -58,7 +58,7 @@ def main():
         password = d.get_password(
             "Bugzilla Password",
             "Enter new password for the Bugzilla '%s' account." % email)
- 
+
     command = [join(dirname(__file__), 'bz_crypt.pl'), password]
     p = subprocess.Popen(command, stdin=PIPE, stdout=PIPE, shell=False)
     stdout, stderr = p.communicate()
@@ -68,8 +68,8 @@ def main():
     cryptpass = stdout.strip()
 
     m = MySQL()
-    m.execute('UPDATE bugzilla3.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
-    m.execute('UPDATE bugzilla3.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
+    m.execute('UPDATE bugzilla.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
+    m.execute('UPDATE bugzilla.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
 
 if __name__ == "__main__":
     main()

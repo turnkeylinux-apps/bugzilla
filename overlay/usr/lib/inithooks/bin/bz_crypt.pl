@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib "/usr/share/bugzilla3";
+use lib "/var/www/bugzilla";
 use Bugzilla;
 use Bugzilla::Util;
 
