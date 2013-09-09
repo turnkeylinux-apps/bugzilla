@@ -12,11 +12,8 @@ and on top of that:
 
 - Bugzilla configurations:
    
-   - Installed from package management. See /var/www for links to file
-     paths.
+   - Installed from upstream source code to /var/www/bugzilla.
    - Periodically collect statistics and execute *whine*.
-   - Suppress annoying new version messages (irrelevant due to package
-     being managed by APT).
    - Includes support for dependency graphs and documentation.
 
 - SSL support out of the box.
