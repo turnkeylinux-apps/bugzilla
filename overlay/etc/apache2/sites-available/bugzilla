@@ -2,22 +2,21 @@ NameVirtualHost *:80
 NameVirtualHost *:443
 
 SetEnv X_BUGZILLA_WEBPATH "/"
-Alias /doc/bugzilla3-doc /usr/share/doc/bugzilla3-doc
 
 <VirtualHost *:80>
     UseCanonicalName Off
     ServerAdmin  webmaster@localhost
-    DocumentRoot /usr/share/bugzilla3/web
+    DocumentRoot /var/www/bugzilla
 </VirtualHost>
 
 <VirtualHost *:443>
     SSLEngine on
     SSLCertificateFile /etc/ssl/certs/cert.pem
     ServerAdmin  webmaster@localhost
-    DocumentRoot /usr/share/bugzilla3/web
+    DocumentRoot /var/www/bugzilla
 </VirtualHost>
 
-<Directory "/usr/share/bugzilla3/web">
+<Directory "/var/www/bugzilla">
     AddHandler cgi-script cgi
     DirectoryIndex index.cgi
     Options +Indexes +ExecCGI -MultiViews +SymLinksIfOwnerMatch +FollowSymLinks
@@ -26,21 +25,21 @@ Alias /doc/bugzilla3-doc /usr/share/doc/bugzilla3-doc
     Allow from all
 </Directory>
 
-<Directory "/usr/share/bugzilla3/web/data">
+<Directory "/var/www/bugzilla/data">
     Options +FollowSymLinks -Indexes
     AllowOverride None
     Order allow,deny
     Allow from all
 </Directory>
 
-<Directory "/usr/share/bugzilla3/web/js">
+<Directory "/var/www/bugzilla/js">
     Options +FollowSymLinks -Indexes
     AllowOverride None
     Order allow,deny
     Allow from all
 </Directory>
 
-<Directory "/usr/share/bugzilla3/web/skins">
+<Directory "/var/www/bugzilla/skins">
     Options +FollowSymLinks -Indexes
     AllowOverride None
     Order allow,deny
