@@ -1,86 +1,72 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
 
-BZ_ADMIN_NAME=admin
-BZ_ADMIN_PASS=turnkey
-BZ_ADMIN_MAIL=admin@example.com
+DB_NAME=bugzilla
+DB_USER=bugzilla
+DB_PASS=$(mcookie)
 
-BZ_ETC=/etc/bugzilla3
-BZ_SHARE=/usr/share/bugzilla3
+ADMIN_MAIL=admin@example.com
+ADMIN_PASS=turnkey
 
-# convenience symlinks
-ln -s /usr/share/bugzilla3/web /var/www/webroot
-ln -s /etc/bugzilla3 /var/www/config
+SRC=/usr/local/src
+WEBROOT=/var/www/bugzilla
 
-# innodb workaround
-/etc/init.d/mysql start
-/etc/init.d/mysql stop
-rm /var/lib/mysql/ib_logfile*
+# unpack and set ownership
+tar -zxf $SRC/bugzilla-*.tar.gz -C $(dirname $WEBROOT)
+mv $WEBROOT-* $WEBROOT
+chown -R www-data:www-data $WEBROOT
 
-# start mysql server
-/etc/init.d/mysql start
-
-# configure bugzilla db settings
-cat > /etc/dbconfig-common/bugzilla3.conf <<EOF
-dbc_install='true'
-dbc_upgrade='true'
-dbc_remove=''
-dbc_dbtype='mysql'
-dbc_dbuser='bugzilla3'
-dbc_dbpass='y1JoES55Nqvw'
-dbc_dbserver=''
-dbc_dbport=''
-dbc_dbname='bugzilla3'
-dbc_dbadmin='root'
-dbc_basepath=''
-dbc_ssl=''
-dbc_authmethod_admin=''
-dbc_authmethod_user=''
-EOF
-
-# configure bugzilla app settings
-debconf-set-selections << EOF
-bugzilla3 bugzilla3/dbconfig-install boolean true
-bugzilla3 bugzilla3/dbconfig-reinstall boolean true
-bugzilla3 bugzilla3/customized_values boolean false
-bugzilla3 bugzilla3/customized_values_ask_again boolean false
-bugzilla3 bugzilla3/bugzilla_admin_pwd password $BZ_ADMIN_PASS
-bugzilla3 bugzilla3/bugzilla_admin_name string $BZ_ADMIN_MAIL
-bugzilla3 bugzilla3/bugzilla_admin_real_name string $BZ_ADMIN_NAME
-bugzilla3 bugzilla_admin_real_name string $BZ_ADMIN_NAME
-EOF
-
-DEBIAN_FRONTEND=noninteractive dpkg-reconfigure bugzilla3
-
-# set default email language to english
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-$MYSQL_BATCH --execute "UPDATE bugzilla3.setting SET default_value = 'en' WHERE name = 'lang';"
-
-# stop mysql server
-/etc/init.d/mysql stop
-
-# update config
-update_params() {
-    sed -i "s;'$1' => \(.*\);'$1' => '$2',;" $BZ_ETC/params
-}
-
-#set urlbase to webroot
-update_params urlbase /
-
-# enable imagemap (webdot)
-a2enmod imagemap
-
-# apache configuration
-rm /etc/apache2/conf.d/bugzilla3.conf
-touch /etc/apache2/conf.d/bugzilla3.conf
-
-ln -s $BZ_ETC/apache.conf /etc/apache2/sites-available/bugzilla3
+# configure apache
 a2dissite default
-a2ensite bugzilla3
+a2ensite bugzilla
+a2enmod rewrite
+a2enmod headers
+a2enmod expires
+
+# setup the database
+/etc/init.d/mysql start
+MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
+MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
+
+$MYSQL_ADMIN create $DB_NAME --default-character-set=utf8;
+$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
+
+# configure bugzilla
+cat > $WEBROOT/answers <<EOF
+\$answer{'create_htaccess'} = 1;
+\$answer{'webservergroup'} = 'www-data';
+\$answer{'use_suexec'} = 0;
+\$answer{'index_html'} = 0;
+\$answer{'cvs_bin'} = '';
+\$answer{'interdiffbin'} = '';
+\$answer{'diffpath'} = '/usr/bin';
+\$answer{'site_wide_secret'} = '$(mcookie)$(mcookie)';
+\$answer{'db_host'} = 'localhost';
+\$answer{'db_driver'} = 'mysql';
+\$answer{'db_name'} = '$DB_NAME';
+\$answer{'db_user'} = '$DB_USER';
+\$answer{'db_pass'} = '$DB_PASS';
+\$answer{'db_sock'} = '';
+\$answer{'db_port'} = 0;
+\$answer{'db_check'} = 0;
+\$answer{'urlbase'} = '/';
+\$answer{'ADMIN_EMAIL'} = '$ADMIN_MAIL';
+\$answer{'ADMIN_PASSWORD'} = '$ADMIN_PASS';
+\$answer{'ADMIN_REALNAME'} = 'admin';
+\$answer{'SMTP_SERVER'} = 'localhost';
+\$answer{'NO_PAUSE'} = 1
+EOF
+
+cd $WEBROOT
+./checksetup.pl $WEBROOT/answers
+./checksetup.pl $WEBROOT/answers
+rm $WEBROOT/answers
+
+/etc/init.d/mysql stop
 
 # cron jobs
 echo "
-0 0 * * * (cd $BZ_SHARE/lib && ./collectstats.pl)
-0 0 * * * (cd $BZ_SHARE/lib && ./whineatnews.pl)
-0,15,30,45 * * * * (cd $BZ_SHARE/lib && ./whine.pl)
+0 0 * * * (cd $WEBROOT/lib && ./collectstats.pl)
+0 0 * * * (cd $WEBROOT/lib && ./whineatnews.pl)
+0,15,30,45 * * * * (cd $WEBROOT/lib && ./whine.pl)
 " | crontab -u root -
 
