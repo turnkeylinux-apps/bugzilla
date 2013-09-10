@@ -14,6 +14,7 @@ WEBROOT=/var/www/bugzilla
 tar -zxf $SRC/bugzilla-*.tar.gz -C $(dirname $WEBROOT)
 mv $WEBROOT-* $WEBROOT
 chown -R www-data:www-data $WEBROOT
+rm $SRC/bugzilla-*.tar.gz
 
 # configure apache
 a2dissite default
