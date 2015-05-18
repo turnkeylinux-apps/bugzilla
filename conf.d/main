@@ -17,7 +17,7 @@ chown -R www-data:www-data $WEBROOT
 rm $SRC/bugzilla-*.tar.gz
 
 # configure apache
-a2dissite default
+a2dissite 000-default
 a2ensite bugzilla
 a2enmod rewrite
 a2enmod headers
