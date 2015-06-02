@@ -23,6 +23,8 @@ a2enmod rewrite
 a2enmod headers
 a2enmod expires
 
+perl install-module.pl Email::Send
+
 # setup the database
 /etc/init.d/mysql start
 MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
