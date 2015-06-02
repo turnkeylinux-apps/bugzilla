@@ -3,7 +3,6 @@
 apache2-mpm-worker
 webmin-apache
 libapache2-mod-perl2
-
 mysql-client
 mysql-server
 webmin-mysql
@@ -11,8 +10,9 @@ libdbd-mysql-perl
 
 postfix
 webmin-postfix
-libemail-send-perl
 libemail-mime-perl
+libemail-sender-perl 
+libmime-tools-perl
 
 libdatetime-perl
 liburi-perl
@@ -22,4 +22,39 @@ libgd-graph-perl
 libchart-perl
 libtemplate-perl
 libtemplate-plugin-gd-perl
+
+libappconfig-perl 
+libdate-calc-perl 
+libdatetime-timezone-perl 
+libdatetime-perl 
+libdbi-perl 
+libdbd-mysql-perl 
+libcgi-pm-perl 
+libmath-random-isaac-perl 
+libmath-random-isaac-xs-perl 
+libapache2-mod-perl2 
+libapache2-mod-perl2-dev 
+libchart-perl 
+libxml-perl 
+libxml-twig-perl 
+perlmagick 
+libgd-graph-perl 
+libtemplate-plugin-gd-perl 
+libsoap-lite-perl 
+libhtml-scrubber-perl 
+libjson-rpc-perl 
+libtheschwartz-perl 
+libtest-taint-perl 
+libauthen-radius-perl 
+libfile-slurp-perl 
+libencode-detect-perl 
+libmodule-build-perl 
+libnet-ldap-perl 
+libauthen-sasl-perl 
+libtemplate-perl-doc 
+libfile-mimeinfo-perl 
+libhtml-formattext-withlinks-perl 
+libgd-dev 
+lynx-cur 
+python-sphinx
 
