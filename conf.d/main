@@ -22,8 +22,7 @@ a2ensite bugzilla
 a2enmod rewrite
 a2enmod headers
 a2enmod expires
-
-perl install-module.pl Email::Send
+a2enmod cgid
 
 # setup the database
 /etc/init.d/mysql start
@@ -60,6 +59,8 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
+./install-module.pl Email::Send Daemon::Generic PatchReader JSON::XS Email::Reply XMLRPC::Lite
+
 ./checksetup.pl $WEBROOT/answers
 ./checksetup.pl $WEBROOT/answers
 rm $WEBROOT/answers
@@ -73,3 +74,6 @@ echo "
 0,15,30,45 * * * * (cd $WEBROOT/lib && ./whine.pl)
 " | crontab -u root -
 
+rm -rf /root/.cpan
+apt-get purge -y gcc make
+apt-get autoremove -y
