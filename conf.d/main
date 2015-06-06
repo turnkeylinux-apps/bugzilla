@@ -65,13 +65,16 @@ cd $WEBROOT
 ./checksetup.pl $WEBROOT/answers
 rm $WEBROOT/answers
 
+# run collectstats - scripts so stats page doesn't error
+./collectstats.pl
+
 /etc/init.d/mysql stop
 
 # cron jobs
 echo "
-0 0 * * * (cd $WEBROOT/lib && ./collectstats.pl)
-0 0 * * * (cd $WEBROOT/lib && ./whineatnews.pl)
-0,15,30,45 * * * * (cd $WEBROOT/lib && ./whine.pl)
+0 0 * * * (cd $WEBROOT && ./collectstats.pl)
+0 0 * * * (cd $WEBROOT && ./whineatnews.pl)
+0,15,30,45 * * * * (cd $WEBROOT && ./whine.pl)
 " | crontab -u root -
 
 rm -rf /root/.cpan
