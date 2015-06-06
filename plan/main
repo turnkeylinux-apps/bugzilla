@@ -55,6 +55,6 @@ libtemplate-perl-doc
 libfile-mimeinfo-perl 
 libhtml-formattext-withlinks-perl 
 libgd-dev 
-lynx-cur 
-python-sphinx
 
+gcc /* for installing perl modules via cpan */
+make
