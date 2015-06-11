@@ -5,6 +5,6 @@ dl() {
     cd $2; curl -L -f -O $PROXY $1; cd -
 }
 
-URL=http://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-4.4.tar.gz
+URL=http://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-STABLE.tar.gz
 dl $URL /usr/local/src
 

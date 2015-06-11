@@ -17,11 +17,12 @@ chown -R www-data:www-data $WEBROOT
 rm $SRC/bugzilla-*.tar.gz
 
 # configure apache
-a2dissite default
+a2dissite 000-default
 a2ensite bugzilla
 a2enmod rewrite
 a2enmod headers
 a2enmod expires
+a2enmod cgid
 
 # setup the database
 /etc/init.d/mysql start
@@ -58,16 +59,24 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
+./install-module.pl Email::Send Daemon::Generic PatchReader JSON::XS Email::Reply XMLRPC::Lite
+
 ./checksetup.pl $WEBROOT/answers
 ./checksetup.pl $WEBROOT/answers
 rm $WEBROOT/answers
+
+# run collectstats - scripts so stats page doesn't error
+./collectstats.pl
 
 /etc/init.d/mysql stop
 
 # cron jobs
 echo "
-0 0 * * * (cd $WEBROOT/lib && ./collectstats.pl)
-0 0 * * * (cd $WEBROOT/lib && ./whineatnews.pl)
-0,15,30,45 * * * * (cd $WEBROOT/lib && ./whine.pl)
+0 0 * * * (cd $WEBROOT && ./collectstats.pl)
+0 0 * * * (cd $WEBROOT && ./whineatnews.pl)
+0,15,30,45 * * * * (cd $WEBROOT && ./whine.pl)
 " | crontab -u root -
 
+rm -rf /root/.cpan
+apt-get purge -y gcc make
+apt-get autoremove -y
