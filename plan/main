@@ -8,8 +8,6 @@ mysql-server
 webmin-mysql
 libdbd-mysql-perl
 
-postfix
-webmin-postfix
 libemail-mime-perl
 libemail-sender-perl 
 libmime-tools-perl
