@@ -9,6 +9,7 @@ Option:
 
 import sys
 import getopt
+import inithooks_cache
 from os.path import *
 import subprocess
 from subprocess import PIPE
@@ -50,6 +51,8 @@ def main():
             "Bugzilla Email",
             "Enter email address for the Bugzilla 'admin' account.",
             "admin@example.com")
+
+    inithooks_cache.write('APP_EMAIL', email)
 
     if not password:
         if 'd' not in locals():
