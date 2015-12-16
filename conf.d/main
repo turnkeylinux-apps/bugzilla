@@ -10,11 +10,8 @@ ADMIN_PASS=turnkey
 SRC=/usr/local/src
 WEBROOT=/var/www/bugzilla
 
-# unpack and set ownership
-tar -zxf $SRC/bugzilla-*.tar.gz -C $(dirname $WEBROOT)
-mv $WEBROOT-* $WEBROOT
+# set ownership
 chown -R www-data:www-data $WEBROOT
-rm $SRC/bugzilla-*.tar.gz
 
 # configure apache
 a2dissite 000-default
@@ -59,7 +56,7 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
-./install-module.pl Email::Send Daemon::Generic PatchReader JSON::XS Email::Reply XMLRPC::Lite
+./install-module.pl Email::Reply Daemon::Generic PatchReader JSON::XS Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
 
 ./checksetup.pl $WEBROOT/answers
 ./checksetup.pl $WEBROOT/answers
@@ -69,6 +66,7 @@ rm $WEBROOT/answers
 ./collectstats.pl
 
 /etc/init.d/mysql stop
+
 
 # cron jobs
 echo "
