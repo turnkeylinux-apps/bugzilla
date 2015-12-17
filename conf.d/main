@@ -67,7 +67,6 @@ rm $WEBROOT/answers
 
 /etc/init.d/mysql stop
 
-
 # cron jobs
 echo "
 0 0 * * * (cd $WEBROOT && ./collectstats.pl)

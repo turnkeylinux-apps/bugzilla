@@ -13,9 +13,13 @@ import inithooks_cache
 from os.path import *
 import subprocess
 from subprocess import PIPE
+import json
+import codecs
 
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
+
+DEFAULT_DOMAIN='www.example.com'
 
 def fatal(s):
     print >> sys.stderr, "Error:", s
@@ -31,12 +35,14 @@ def usage(s=None):
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'pass=', 'email='])
+                                       ['help', 'pass=', 'email=', 'outmail=', 'domain='])
     except getopt.GetoptError, e:
         usage(e)
 
     password = ""
     email = ""
+    outmail = ""
+    domain = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
@@ -44,6 +50,10 @@ def main():
             password = val
         elif opt == '--email':
             email = val
+        elif opt == '--outmail':
+            outmail = val
+        elif opt == '--domain':
+            domain = val
 
     if not email:
         d = Dialog('TurnKey Linux - First boot configuration')
@@ -73,6 +83,39 @@ def main():
     m = MySQL()
     m.execute('UPDATE bugzilla.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
     m.execute('UPDATE bugzilla.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
+
+    if not domain:
+        if 'd' not in locals():
+            d = Dialog('Turnkey Linux - First boot configuration')
+
+        domain = d.get_input(
+            "Bugzilla Domain",
+            "Enter domain to serv Bugzilla.",
+            DEFAULT_DOMAIN)
+
+    if domain == "DEFAULT":
+        domain = DEFAULT_DOMAIN
+
+    inithooks_cache.write("APP_DOMAIN", domain)
+
+    if not outmail:
+        if 'd' not in locals():
+            d = Dialog('Turnkey Linux - First boot configuration')
+
+        outmail = d.get_email(
+            "Bugzilla Daemon Email",
+            "Enter email address for Bugzilla to send email from",
+            "bugzilla-daemon@{}".format(DEFAULT_DOMAIN))
+
+    if not domain.endswith('/'): # Add slash so emailed urls are correct
+        domain += '/'
+
+    with open('/var/www/bugzilla/data/params.json', 'r+') as fob:
+        data = json.load(fob)
+        data['urlbase'] = domain
+        data['mailfrom'] = outmail
+        fob.seek(0)
+        json.dump(data, fob, indent = 4)
 
 if __name__ == "__main__":
     main()

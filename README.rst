@@ -13,6 +13,11 @@ and on top of that:
 - Bugzilla configurations:
    
    - Installed from upstream source code to /var/www/bugzilla.
+
+     **Security note**: Updates to bugzilla may require supervision so
+     they **ARE NOT** configured to install automatically. See `bugzilla
+     documentation`_ for upgrading.
+
    - Periodically collect statistics and execute *whine*.
    - Includes support for dependency graphs and documentation.
 
@@ -45,3 +50,4 @@ Credentials *(passwords set at first boot)*
 
 .. _Bugzilla: http://www.bugzilla.org/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
+.. _bugzilla documentation: http://bugzilla.readthedocs.org/en/latest/installing/upgrading-with-git.html
