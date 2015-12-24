@@ -27,6 +27,7 @@ libtemplate-plugin-gd-perl
 libsoap-lite-perl
 libhtml-scrubber-perl
 libjson-rpc-perl
+libjson-xs-perl
 libtheschwartz-perl
 libtest-taint-perl
 libauthen-radius-perl

@@ -56,7 +56,7 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
-./install-module.pl Email::Reply Daemon::Generic PatchReader JSON::XS Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
+./install-module.pl Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
 
 ./checksetup.pl $WEBROOT/answers
 ./checksetup.pl $WEBROOT/answers

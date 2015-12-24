@@ -20,6 +20,7 @@ from dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
 DEFAULT_DOMAIN='www.example.com'
+DEFAULT_OUTMAIL='bugzilla-daemon@www.example.com'
 
 def fatal(s):
     print >> sys.stderr, "Error:", s
@@ -84,6 +85,7 @@ def main():
     m.execute('UPDATE bugzilla.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
     m.execute('UPDATE bugzilla.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
 
+
     if not domain:
         if 'd' not in locals():
             d = Dialog('Turnkey Linux - First boot configuration')
@@ -105,7 +107,10 @@ def main():
         outmail = d.get_email(
             "Bugzilla Daemon Email",
             "Enter email address for Bugzilla to send email from",
-            "bugzilla-daemon@{}".format(DEFAULT_DOMAIN))
+            "bugzilla-daemon@{}".format(domain))
+
+    if outmail == "DEFAULT":
+        outmail = DEFAULT_OUTMAIL
 
     if not domain.endswith('/'): # Add slash so emailed urls are correct
         domain += '/'

@@ -1,8 +1,15 @@
 #!/bin/bash -e
-# set bugzilla admin email and password
+# set bugzilla admin email, password, domain and outgoing email
 
 . /etc/default/inithooks
 
 [ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
-$INITHOOKS_PATH/bin/bugzilla.py --pass="$APP_PASS" --email="$APP_EMAIL"
+
+if [ -z "$APP_OUTMAIL" ]; then
+    if [ -n "$APP_PASS" ] && [ -n "$APP_EMAIL" ] && [ -n "$APP_DOMAIN" ]; then
+        APP_OUTMAIL="DEFAULT"
+    fi
+fi
+
+$INITHOOKS_PATH/bin/bugzilla.py --pass="$APP_PASS" --email="$APP_EMAIL" --domain="$APP_DOMAIN" --outmail="$APP_OUTMAIL"
 
