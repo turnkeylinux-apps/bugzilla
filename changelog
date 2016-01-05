@@ -1,3 +1,22 @@
+turnkey-bugzilla-14.1 (1) turnkey; urgency=low
+
+  * Bugzilla:
+
+     - Installed latest stable upstream source (via git).
+
+  * Upstream source component versions:
+
+    bugzilla    5.0.1
+
+  * Updated dependancies with latest Debian packages
+
+  * Installed additional perl dependancies via Bugzilla installer
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Stefan Davis <nafets.sivad@gmail.com>  Tue, 22 Dec 2015 03:48:59 +1100
+
 turnkey-bugzilla-14.0 (1) turnkey; urgency=low
 
   * Bugzilla:
