@@ -4,7 +4,10 @@
 Option:
     --email=    unless provided, will ask interactively
     --pass=     unless provided, will ask interactively
-
+    --domain=   unless provided, will ask interactively
+                DEFAULT="www.example.com"
+    --outmail=  unless provided, will ask interactively
+                DEFAULT="bugzilla-daemon@www.example.com"
 """
 
 import sys
@@ -19,8 +22,8 @@ import codecs
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
-DEFAULT_DOMAIN='www.example.com'
-DEFAULT_OUTMAIL='bugzilla-daemon@www.example.com'
+DEFAULT_DOMAIN = 'www.example.com'
+DEFAULT_OUTMAIL = 'bugzilla-daemon'
 
 def fatal(s):
     print >> sys.stderr, "Error:", s
@@ -92,7 +95,7 @@ def main():
 
         domain = d.get_input(
             "Bugzilla Domain",
-            "Enter domain to serv Bugzilla.",
+            "Enter domain to serve Bugzilla.",
             DEFAULT_DOMAIN)
 
     if domain == "DEFAULT":
@@ -107,10 +110,10 @@ def main():
         outmail = d.get_email(
             "Bugzilla Daemon Email",
             "Enter email address for Bugzilla to send email from",
-            "bugzilla-daemon@{}".format(domain))
+            "{}@{}".format(DEFAULT_OUTMAIL,domain))
 
     if outmail == "DEFAULT":
-        outmail = DEFAULT_OUTMAIL
+        outmail = "{}@{}".format(DEFAULT_OUTMAIL,domain)
 
     if not domain.endswith('/'): # Add slash so emailed urls are correct
         domain += '/'
