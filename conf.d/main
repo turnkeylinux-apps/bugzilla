@@ -56,10 +56,12 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
-./install-module.pl Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
+
+echo -e 'y\nq\n' | cpan
+echo -e 'y\n' | cpan install Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
 
 ./checksetup.pl $WEBROOT/answers
-./checksetup.pl $WEBROOT/answers
+echo 'admin\n' | ./checksetup.pl $WEBROOT/answers
 rm $WEBROOT/answers
 
 # run collectstats - scripts so stats page doesn't error
