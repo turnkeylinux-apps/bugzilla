@@ -58,7 +58,7 @@ EOF
 cd $WEBROOT
 
 echo -e 'y\nq\n' | cpan
-echo -e 'y\n' | cpan install Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which
+echo -e 'y\n' | cpan install Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which || true
 
 # note checksetup.pl creates appropriate .htaccess files (if they don't already exist; unless $create_htaccess = 0)
 ./checksetup.pl $WEBROOT/answers
