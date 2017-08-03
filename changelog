@@ -2,6 +2,10 @@ turnkey-bugzilla-14.2 (1) turnkey; urgency=low
 
   * Installed latest upstream (v5.1.1 - from GitHub).
 
+  * Removed firstboot requirement to set domain [closes #828].
+
+  * Improved default config (for security).
+
   * Improved firstboot inithook.
 
   * Installed security updates.
@@ -9,7 +13,7 @@ turnkey-bugzilla-14.2 (1) turnkey; urgency=low
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 03 May 2017 17:39:31 +1000
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 03 Aug 2017 13:58:48 +1000
 
 turnkey-bugzilla-14.1 (1) turnkey; urgency=low
 
