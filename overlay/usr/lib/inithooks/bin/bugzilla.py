@@ -4,8 +4,6 @@
 Option:
     --email=    unless provided, will ask interactively
     --pass=     unless provided, will ask interactively
-    --domain=   unless provided, will ask interactively
-                DEFAULT="www.example.com"
     --outmail=  unless provided, will ask interactively
                 DEFAULT="bugzilla-daemon@www.example.com"
 """
@@ -22,8 +20,7 @@ import codecs
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
-DEFAULT_DOMAIN = 'www.example.com'
-DEFAULT_OUTMAIL = 'bugzilla-daemon'
+DEFAULT_OUTMAIL = 'bugzilla-daemon@example.com'
 
 def fatal(s):
     print >> sys.stderr, "Error:", s
@@ -39,14 +36,13 @@ def usage(s=None):
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'pass=', 'email=', 'outmail=', 'domain='])
+                                       ['help', 'pass=', 'email=', 'outmail='])
     except getopt.GetoptError, e:
         usage(e)
 
     password = ""
     email = ""
     outmail = ""
-    domain = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
@@ -56,8 +52,6 @@ def main():
             email = val
         elif opt == '--outmail':
             outmail = val
-        elif opt == '--domain':
-            domain = val
 
     if not email:
         d = Dialog('TurnKey Linux - First boot configuration')
@@ -88,21 +82,6 @@ def main():
     m.execute('UPDATE bugzilla.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
     m.execute('UPDATE bugzilla.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
 
-
-    if not domain:
-        if 'd' not in locals():
-            d = Dialog('Turnkey Linux - First boot configuration')
-
-        domain = d.get_input(
-            "Bugzilla Domain",
-            "Enter domain to serve Bugzilla.",
-            DEFAULT_DOMAIN)
-
-    if domain == "DEFAULT":
-        domain = DEFAULT_DOMAIN
-
-    inithooks_cache.write("APP_DOMAIN", domain)
-
     if not outmail:
         if 'd' not in locals():
             d = Dialog('Turnkey Linux - First boot configuration')
@@ -110,17 +89,13 @@ def main():
         outmail = d.get_email(
             "Bugzilla Daemon Email",
             "Enter email address for Bugzilla to send email from",
-            "{}@{}".format(DEFAULT_OUTMAIL,domain))
+            "{}".format(DEFAULT_OUTMAIL))
 
     if outmail == "DEFAULT":
-        outmail = "{}@{}".format(DEFAULT_OUTMAIL,domain)
-
-    if not domain.endswith('/'): # Add slash so emailed urls are correct
-        domain += '/'
+        outmail = "{}".format(DEFAULT_OUTMAIL)
 
     with open('/var/www/bugzilla/data/params.json', 'r+') as fob:
         data = json.load(fob)
-        data['urlbase'] = domain
         data['mailfrom'] = outmail
         fob.seek(0)
         json.dump(data, fob, indent = 4)
