@@ -4,7 +4,6 @@
 libappconfig-perl
 libdate-calc-perl
 libtemplate-perl
-libmime-perl
 libdatetime-timezone-perl
 libdatetime-perl
 libemail-sender-perl
@@ -15,7 +14,6 @@ libdbd-mysql-perl
 libcgi-pm-perl
 libmath-random-isaac-perl
 libmath-random-isaac-xs-perl
-apache2-mpm-prefork
 libapache2-mod-perl2
 libapache2-mod-perl2-dev
 libchart-perl
@@ -40,7 +38,7 @@ libtemplate-perl-doc
 libfile-mimeinfo-perl
 libhtml-formattext-withlinks-perl
 libgd-dev
-libmysqlclient-dev
+libmariadbclient-dev-compat
 lynx-cur
 graphviz
 python-sphinx
