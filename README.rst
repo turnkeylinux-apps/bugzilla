@@ -14,8 +14,8 @@ and on top of that:
    
    - Installed from upstream source code via git to /var/www/bugzilla.
 
-     **Security note**: Updates to bugzilla may require supervision so
-     they **ARE NOT** configured to install automatically. See `bugzilla
+     **Security note**: Updates to Bugzilla may require supervision so
+     they **ARE NOT** configured to install automatically. See `Bugzilla
      documentation`_ for upgrading.
 
    - Periodically collect statistics and execute *whine*.
@@ -48,6 +48,6 @@ Credentials *(passwords set at first boot)*
    - customize via: http://*appliance\_ip*/editusers.cgi?action=edit&userid=1
 
 
-.. _Bugzilla: http://www.bugzilla.org/
+.. _Bugzilla: https://www.bugzilla.org/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _bugzilla documentation: http://bugzilla.readthedocs.org/en/latest/installing/upgrading-with-git.html
+.. _Bugzilla documentation: https://bugzilla.readthedocs.org/en/latest/installing/upgrading-with-git.html
