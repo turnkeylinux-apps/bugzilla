@@ -1,3 +1,3 @@
 #!/bin/bash -ex
 
-git clone --depth 1 --branch release-5.1.1 https://github.com/bugzilla/bugzilla.git /var/www/bugzilla
+git clone --depth 1 --branch 5.0 https://github.com/bugzilla/bugzilla.git /var/www/bugzilla

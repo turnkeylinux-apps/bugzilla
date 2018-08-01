@@ -1,11 +1,17 @@
 turnkey-bugzilla-15.0 (1) turnkey; urgency=low
 
-  * Replaces MySQL with MariaDB
+  * Install from latest "stable" 5.0 branch (5.0.4 + patches)
+
+    - v14.2 installed 5.1.1 from 5.1 "dev" branch - oops!
+
+  * Replace MySQL with MariaDB (drop-in MySQL replacement)
+
+  * Updated version of mysqltuner script
 
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
 
- -- Stefan Davis <stefan@turnkeylinux.org>  Sun, 19 Nov 2017 23:30:28 +1100
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 01 Aug 2018 18:46:28 +1000
 
 turnkey-bugzilla-14.2 (1) turnkey; urgency=low
 
