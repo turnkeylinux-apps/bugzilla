@@ -1,5 +1,7 @@
 turnkey-bugzilla-15.1 (1) turnkey; urgency=low
 
+  * Include latest bugfixes from Bugzilla 5.0 branch (5.0.4 + patches).
+
   * Rebuild to resolve inadvertant removal of mariadb during sec-updates
     - part of #1246.
 
