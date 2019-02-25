@@ -94,12 +94,12 @@ def main():
     if outmail == "DEFAULT":
         outmail = "{}".format(DEFAULT_OUTMAIL)
 
-    with open('/var/www/bugzilla/data/params.json', 'r+') as fob:
+    with open('/var/www/bugzilla/data/params.json', 'r') as fob:
         data = json.load(fob)
         data['mailfrom'] = outmail
-        fob.seek(0)
+
+    with open('/var/www/bugzilla/data/params.json', 'w') as fob:
         json.dump(data, fob, indent = 4)
 
 if __name__ == "__main__":
     main()
-

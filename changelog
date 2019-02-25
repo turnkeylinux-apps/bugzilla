@@ -1,3 +1,11 @@
+turnkey-bugzilla-15.2 (1) turnkey; urgency=low
+
+  * Include latest bugfixes from Bugzilla 5.0 branch - v5.0.6.
+
+  * Tweak inithook to resolve intermittant errors - closes #1290.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 25 Feb 2019 11:17:51 +1100
+
 turnkey-bugzilla-15.1 (1) turnkey; urgency=low
 
   * Include latest bugfixes from Bugzilla 5.0 branch (5.0.4 + patches).
