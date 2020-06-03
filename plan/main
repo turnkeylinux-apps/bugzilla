@@ -34,12 +34,12 @@ libencode-detect-perl
 libmodule-build-perl
 libnet-ldap-perl
 libauthen-sasl-perl
-libtemplate-perl-doc
 libfile-mimeinfo-perl
 libhtml-formattext-withlinks-perl
 libgd-dev
 libmariadbclient-dev-compat
-lynx-cur
+lynx
+lynx-common
 graphviz
 python-sphinx
 

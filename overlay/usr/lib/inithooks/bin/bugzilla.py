@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set Bugzilla email and password
 
 Option:
@@ -23,21 +23,21 @@ from mysqlconf import MySQL
 DEFAULT_OUTMAIL = 'bugzilla-daemon@example.com'
 
 def fatal(s):
-    print >> sys.stderr, "Error:", s
+    print("Error:", s, file=sys.stderr)
     sys.exit(1)
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass=', 'email=', 'outmail='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -79,8 +79,10 @@ def main():
     cryptpass = stdout.strip()
 
     m = MySQL()
-    m.execute('UPDATE bugzilla.profiles SET cryptpassword=\"%s\" WHERE userid=\"1\";' % cryptpass)
-    m.execute('UPDATE bugzilla.profiles SET login_name=\"%s\" WHERE userid=\"1\";' % email)
+    m.execute('UPDATE bugzilla.profiles SET cryptpassword=%s WHERE userid=\"1\";',
+            (cryptpass,))
+    m.execute('UPDATE bugzilla.profiles SET login_name=%s WHERE userid=\"1\";',
+            (email,))
 
     if not outmail:
         if 'd' not in locals():
