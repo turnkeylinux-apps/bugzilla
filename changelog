@@ -1,5 +1,7 @@
 turnkey-bugzilla-16.0 (1) turnkey; urgency=low
 
+  * Include latest bugfixes from Bugzilla 5.0 branch - v5.0.6 + patches.
+
   * Explcitly disable TLS<1.2 (i.e. SSLv3, TLSv1, TLSv1.1). (v15.x
     TurnKey releases supported TLS 1.2, but could fallback as low as TLSv1).
 
