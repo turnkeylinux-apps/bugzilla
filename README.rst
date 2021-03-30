@@ -12,7 +12,8 @@ and on top of that:
 
 - Bugzilla configurations:
    
-   - Installed from upstream source code via git to /var/www/bugzilla.
+   - Installed from upstream source code (HEAD of '5.0' branch) via git to
+     /var/www/bugzilla.
 
      **Security note**: Updates to Bugzilla may require supervision so
      they **ARE NOT** configured to install automatically. See `Bugzilla
