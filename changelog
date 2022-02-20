@@ -1,3 +1,12 @@
+turnkey-bugzilla-17.0 (1) turnkey; urgency=low
+
+  * Include latest bugfixes from Bugzilla 5.0 branch - v5.0.6 + patches.
+
+  * Note: Please refer to turnkey-core's 17.0 changelog for changes common to
+    all appliances. Here we only describe changes specific to this appliance.
+
+ -- Zhenya Hvorostian <zhenya@turnkeylinux.org>  Sun, 20 Feb 2022 02:22:10 +0300
+
 turnkey-bugzilla-16.1 (1) turnkey; urgency=low
 
   * Include latest bugfixes from Bugzilla 5.0 branch - v5.0.6 + patches.
