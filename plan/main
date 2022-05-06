@@ -41,7 +41,7 @@ libmariadbclient-dev-compat
 lynx
 lynx-common
 graphviz
-python-sphinx
+python3-sphinx
 
 gcc /* for installing perl modules via cpan */
 make

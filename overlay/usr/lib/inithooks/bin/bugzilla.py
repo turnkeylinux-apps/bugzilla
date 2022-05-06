@@ -10,14 +10,14 @@ Option:
 
 import sys
 import getopt
-import inithooks_cache
+from libinithooks import inithooks_cache
 from os.path import *
 import subprocess
 from subprocess import PIPE
 import json
 import codecs
 
-from dialog_wrapper import Dialog
+from libinithooks.dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
 DEFAULT_OUTMAIL = 'bugzilla-daemon@example.com'
