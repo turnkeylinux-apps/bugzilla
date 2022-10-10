@@ -1,3 +1,13 @@
+turnkey-bugzilla-17.1 (1) turnkey; urgency=low
+
+  * Updated all Debian packages to latest.
+    [ autopatched by buildtasks ]
+
+  * Patched bugfix release. Closes #1734.
+    [ autopatched by buildtasks ]
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 14 Sep 2022 06:48:48 +0000
+
 turnkey-bugzilla-17.0 (1) turnkey; urgency=low
 
   * Include latest bugfixes from Bugzilla 5.0 branch - v5.0.6 + patches.
