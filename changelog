@@ -1,3 +1,12 @@
+turnkey-bugzilla-18.0 (1) turnkey; urgency=low
+
+  * Updated all relevant Debian packages to Bookworm/12 versions.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Anton Pyrogovskyi <anton@turnkeylinux.org>  Tue, 13 Feb 2024 16:40:42 +0100
+
 turnkey-bugzilla-17.1 (1) turnkey; urgency=low
 
   * Updated all Debian packages to latest.
