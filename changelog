@@ -1,6 +1,7 @@
 turnkey-bugzilla-18.0 (1) turnkey; urgency=low
 
-  * Update Bugzilla to latest 5.0 branch via git - v5.0.6 + patches.
+  * Update Bugzilla to latest 5.2 branch via git. Note this is a new major
+    version - see https://github.com/bugzilla/bugzilla/pull/148
     [Anton Pyrogovskyi <anton@turnkeylinux.org>]
 
   * Confconsole: bugfix broken DNS-01 Let's Encrypt challenge- closes #1876 &
@@ -74,7 +75,7 @@ turnkey-bugzilla-18.0 (1) turnkey; urgency=low
 
   * Use MariaDB (MySQL replacement) v10.11.3 (from debian repos).
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 13 Mar 2024 09:07:46 +0000
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 14 Mar 2024 04:20:00 +0000
 
 turnkey-bugzilla-17.1 (1) turnkey; urgency=low
 
