@@ -3,4 +3,4 @@
 [[ -z "$FAB_HTTP_PROXY" ]] || export http_proxy=$FAB_HTTP_PROXY
 [[ -z "$FAB_HTTPS_PROXY" ]] || export https_proxy=$FAB_HTTPS_PROXY
 
-git clone --depth 1 --branch 5.2 https://github.com/bugzilla/bugzilla.git /var/www/bugzilla
+git clone --depth 1 --branch release-5.0.6 https://github.com/bugzilla/bugzilla.git /var/www/bugzilla

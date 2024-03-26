@@ -1,8 +1,10 @@
 turnkey-bugzilla-18.0 (1) turnkey; urgency=low
 
-  * Update Bugzilla to latest 5.2 branch via git. Note this is a new major
-    version - see https://github.com/bugzilla/bugzilla/pull/148
-    [Anton Pyrogovskyi <anton@turnkeylinux.org>]
+  * Downgrade Bugzilla to 5.0.6 tag via git. See
+    https://github.com/turnkeylinux/tracker/issues/1918
+    Thanks to Anton Pyrogovskyi who performed the update to 5.2 before it
+    had to be downgraded.
+    [Stefan Davis <stefan@turnkeylinux.org>]
 
   * Confconsole: bugfix broken DNS-01 Let's Encrypt challenge- closes #1876 &
     #1895.
