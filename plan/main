@@ -1,6 +1,15 @@
 #include <turnkey/base>
 #include <turnkey/lamp>
 
+libemail-reply-perl
+libdaemon-generic-perl
+libxmlrpc-lite-perl
+libfile-copy-recursive-perl
+libfile-which-perl
+libemail-address-perl
+liblog-log4perl-perl
+libhttp-tiny-perl
+
 libappconfig-perl
 libdate-calc-perl
 libtemplate-perl

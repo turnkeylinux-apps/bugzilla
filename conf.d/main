@@ -54,8 +54,11 @@ EOF
 
 cd $WEBROOT
 
+# configure build proxy for cpan
+export http_proxy="$FAB_HTTP_PROXY" https_proxy="$FAB_HTTPS_PROXY"
+
 echo -e 'y\nq\n' | cpan
-echo -e 'y\n' | cpan install Email::Reply Daemon::Generic PatchReader Email::Reply XMLRPC::Lite File::Copy::Recursive File::Which || true
+echo -e 'y\n' | cpan install PatchReader || true
 
 # note checksetup.pl creates appropriate .htaccess files (if they don't already exist; unless $create_htaccess = 0)
 ./checksetup.pl $WEBROOT/answers
@@ -77,3 +80,5 @@ echo "
 rm -rf /root/.cpan
 apt-get purge -y gcc make
 apt-get autoremove -y
+
+unset http_proxy https_proxy
