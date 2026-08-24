@@ -12,8 +12,10 @@ and on top of that:
 
 - Bugzilla configurations:
    
-   - Installed from upstream source code (HEAD of '5.0' branch) via git to
-     /var/www/bugzilla.
+   - Installed from the maintained upstream ``5.2`` branch via git to
+     ``/var/www/bugzilla``. The initial appliance build pins the upstream
+     commit while retaining the branch and official remote for supervised
+     updates.
 
      **Security note**: Updates to Bugzilla may require supervision so
      they **ARE NOT** configured to install automatically. See `Bugzilla
@@ -25,6 +27,7 @@ and on top of that:
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email (e.g.,
   password recovery).
+- Adminer database management at https://*appliance\_ip*:12322.
 - Webmin modules for configuring Apache2, MySQL and Postfix.
 
 Initial configuration: http://*appliance\_ip*/editparams.cgi
@@ -42,7 +45,8 @@ Initial configuration: http://*appliance\_ip*/editparams.cgi
 Credentials *(passwords set at first boot)*
 -------------------------------------------
 
-- Webmin, Webshell, SSH, MySQL: username **root**
+- Webmin, SSH, MySQL: username **root**
+- Adminer: username **adminer**
 - Bugzilla:
    
    - username is email set at first boot

@@ -10,6 +10,15 @@ ADMIN_PASS=turnkey
 SRC=/usr/local/src
 WEBROOT=/var/www/bugzilla
 
+# Bugzilla 5.2 requires Template Toolkit 3.009 or newer. Trixie's package is
+# older, so install the pinned official CPAN release downloaded above.
+tar --extract --gzip --file $SRC/Template-Toolkit-3.106.tar.gz --directory $SRC
+cd $SRC/Template-Toolkit-3.106
+perl Makefile.PL INSTALLDIRS=site
+make
+make test
+make install
+
 # set ownership
 chown -R www-data:www-data $WEBROOT
 
@@ -25,6 +34,15 @@ a2enmod cgid
 service mysql start
 mysqladmin create $DB_NAME --default-character-set=utf8;
 mysql --batch --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
+cat >/etc/mysql/mariadb.conf.d/60-bugzilla.cnf <<'EOF'
+[mysqld]
+max_allowed_packet = 1G
+innodb_file_per_table = ON
+ft_min_word_len = 2
+
+[mysql]
+max_allowed_packet = 1G
+EOF
 
 # configure bugzilla
 cat > $WEBROOT/answers <<EOF
@@ -37,7 +55,7 @@ cat > $WEBROOT/answers <<EOF
 \$answer{'diffpath'} = '/usr/bin';
 \$answer{'site_wide_secret'} = '$(mcookie)$(mcookie)';
 \$answer{'db_host'} = 'localhost';
-\$answer{'db_driver'} = 'mysql';
+\$answer{'db_driver'} = 'mariadb';
 \$answer{'db_name'} = '$DB_NAME';
 \$answer{'db_user'} = '$DB_USER';
 \$answer{'db_pass'} = '$DB_PASS';
@@ -53,12 +71,6 @@ cat > $WEBROOT/answers <<EOF
 EOF
 
 cd $WEBROOT
-
-# configure build proxy for cpan
-export http_proxy="$FAB_HTTP_PROXY" https_proxy="$FAB_HTTPS_PROXY"
-
-echo -e 'y\nq\n' | cpan
-echo -e 'y\n' | cpan install PatchReader || true
 
 # note checksetup.pl creates appropriate .htaccess files (if they don't already exist; unless $create_htaccess = 0)
 ./checksetup.pl $WEBROOT/answers
@@ -77,8 +89,6 @@ echo "
 0,15,30,45 * * * * (cd $WEBROOT && ./whine.pl)
 " | crontab -u root -
 
-rm -rf /root/.cpan
 apt-get purge -y gcc make
 apt-get autoremove -y
-
-unset http_proxy https_proxy
+rm -rf $SRC/Template-Toolkit-3.106 $SRC/Template-Toolkit-3.106.tar.gz

@@ -3,4 +3,18 @@
 [[ -z "$FAB_HTTP_PROXY" ]] || export http_proxy=$FAB_HTTP_PROXY
 [[ -z "$FAB_HTTPS_PROXY" ]] || export https_proxy=$FAB_HTTPS_PROXY
 
-git clone --depth 1 --branch 5.0.4 https://github.com/bugzilla/bugzilla.git /var/www/bugzilla
+BUGZILLA_COMMIT=5756ec67b506c20ff4b2c32d80e6fcf35e536b76
+BUGZILLA_URL=https://github.com/bugzilla/bugzilla.git
+TEMPLATE_URL=https://cpan.metacpan.org/authors/id/T/TO/TODDR/Template-Toolkit-3.106.tar.gz
+TEMPLATE_SHA256=c7474050be80201f1fb55f0a569b9c0ab6c1c3f0cebbd7e601bda9b4046eec85
+
+git init /var/www/bugzilla
+git -C /var/www/bugzilla remote add origin "$BUGZILLA_URL"
+git -C /var/www/bugzilla fetch --depth 1 origin "$BUGZILLA_COMMIT"
+git -C /var/www/bugzilla checkout -b 5.2 FETCH_HEAD
+test "$(git -C /var/www/bugzilla rev-parse HEAD)" = "$BUGZILLA_COMMIT"
+
+curl --fail --location --output /usr/local/src/Template-Toolkit-3.106.tar.gz \
+    "$TEMPLATE_URL"
+echo "$TEMPLATE_SHA256  /usr/local/src/Template-Toolkit-3.106.tar.gz" \
+    | sha256sum --check

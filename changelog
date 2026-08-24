@@ -1,3 +1,12 @@
+turnkey-bugzilla-19.0 (1) turnkey; urgency=low
+
+  * Install Bugzilla 5.2 from a pinned commit on the maintained upstream
+    branch and use its MariaDB driver.
+
+  * Port the appliance to Debian 13/Trixie.
+
+ -- TurnKey Linux release engineering <release@turnkeylinux.org>  Mon, 24 Aug 2026 00:00:00 +0000
+
 turnkey-bugzilla-18.0 (1) turnkey; urgency=low
 
   * Downgrade Bugzilla to 5.0.4 branch via git. See
