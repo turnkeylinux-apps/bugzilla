@@ -1,5 +1,4 @@
-COMMON_OVERLAYS = apache
-COMMON_CONF += apache-credit apache-vhost
+COMMON_CONF += apache-credit
 
-include $(FAB_PATH)/common/mk/turnkey/mysql.mk
+include $(FAB_PATH)/common/mk/turnkey/lamp.mk
 include $(FAB_PATH)/common/mk/turnkey.mk
