@@ -24,10 +24,11 @@ systemctl --quiet is-enabled apache2.service mariadb.service postfix.service \
     cron.service
 apache2ctl -t
 
-bugzilla_commit=$(git -C /var/www/bugzilla rev-parse HEAD)
+git_safe=(git -c safe.directory=/var/www/bugzilla -C /var/www/bugzilla)
+bugzilla_commit=$("${git_safe[@]}" rev-parse HEAD)
 test "$bugzilla_commit" = 5756ec67b506c20ff4b2c32d80e6fcf35e536b76
-test "$(git -C /var/www/bugzilla branch --show-current)" = 5.2
-test "$(git -C /var/www/bugzilla remote get-url origin)" = \
+test "$("${git_safe[@]}" branch --show-current)" = 5.2
+test "$("${git_safe[@]}" remote get-url origin)" = \
     https://github.com/bugzilla/bugzilla.git
 test "$(perl -MTemplate -e 'print $Template::VERSION')" = 3.106
 test "$(perl -MDBD::MariaDB -e 'print $DBD::MariaDB::VERSION')" != ""
@@ -108,14 +109,14 @@ grep -qi 'Logout' "$response"
 curl --insecure --fail --silent --show-error --head \
     https://127.0.0.1:12321/ >/dev/null
 
-git -C /var/www/bugzilla fetch --quiet origin 5.2
-candidate=$(git -C /var/www/bugzilla rev-parse FETCH_HEAD)
-git -C /var/www/bugzilla merge-base --is-ancestor \
+"${git_safe[@]}" fetch --quiet origin 5.2
+candidate=$("${git_safe[@]}" rev-parse FETCH_HEAD)
+"${git_safe[@]}" merge-base --is-ancestor \
     "$bugzilla_commit" "$candidate"
 /var/www/bugzilla/checksetup.pl --check-modules \
     >"$response"
 grep -q 'COMMANDS TO INSTALL' "$response"
-test "$(git -C /var/www/bugzilla rev-parse HEAD)" = \
+test "$("${git_safe[@]}" rev-parse HEAD)" = \
     "$bugzilla_commit"
 
 apache_version=$(dpkg-query -W -f='${Version}' apache2)
