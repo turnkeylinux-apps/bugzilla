@@ -46,7 +46,7 @@ token=$(python3 -c 'import json,sys; print(json.load(sys.stdin)["token"])' <"$re
 test -n "$token"
 
 cat >"$payload" <<EOF
-{"product":"TestProduct","component":"TestComponent","version":"unspecified","summary":"TurnKey v19 acceptance bug","description":"Created through the Bugzilla REST API","token":"$token"}
+{"product":"TestProduct","component":"TestComponent","version":"unspecified","summary":"TurnKey v19 acceptance bug","description":"Created through the Bugzilla REST API","op_sys":"All","platform":"All","priority":"P4","severity":"normal","token":"$token"}
 EOF
 curl --insecure --fail --silent --show-error \
     -H 'Content-Type: application/json' --data-binary @"$payload" \
