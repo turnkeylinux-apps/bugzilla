@@ -32,7 +32,7 @@ test "$("${git_safe[@]}" remote get-url origin)" = \
     https://github.com/bugzilla/bugzilla.git
 test "$(perl -MTemplate -e 'print $Template::VERSION')" = 3.106
 test "$(perl -MDBD::MariaDB -e 'print $DBD::MariaDB::VERSION')" != ""
-grep -Eq "^\$db_driver[[:space:]]*=[[:space:]]*'mariadb';" \
+grep -Eq "^[$]db_driver[[:space:]]*=[[:space:]]*'mariadb';" \
     /var/www/bugzilla/localconfig
 
 curl --insecure --fail --silent --show-error "$base/" >"$response"
