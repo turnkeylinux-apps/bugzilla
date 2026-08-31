@@ -15,12 +15,16 @@ libdate-calc-perl
 libtemplate-perl
 libdatetime-timezone-perl
 libdatetime-perl
+libdbix-connector-perl
+libmoo-perl
 libemail-sender-perl
+libemail-address-xs-perl
 libemail-mime-perl
-libemail-mime-modifier-perl
 libdbi-perl
-libdbd-mysql-perl
+libdbd-mariadb-perl
 libcgi-pm-perl
+liburi-perl
+liblist-moreutils-perl
 libmath-random-isaac-perl
 libmath-random-isaac-xs-perl
 libapache2-mod-perl2
@@ -46,7 +50,7 @@ libauthen-sasl-perl
 libfile-mimeinfo-perl
 libhtml-formattext-withlinks-perl
 libgd-dev
-libmariadbclient-dev-compat
+libmariadb-dev-compat
 lynx
 lynx-common
 graphviz
